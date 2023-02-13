@@ -12,6 +12,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 
 import java.io.File;
+import java.time.Duration;
+
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class CloudStorageApplicationTests {
 
@@ -51,7 +53,7 @@ class CloudStorageApplicationTests {
 		// Create a dummy account for logging in later.
 
 		// Visit the sign-up page.
-		WebDriverWait webDriverWait = new WebDriverWait(driver, 2);
+		WebDriverWait webDriverWait = new WebDriverWait(driver, Duration.ofSeconds(2));
 		driver.get("http://localhost:" + this.port + "/signup");
 		webDriverWait.until(ExpectedConditions.titleContains("Sign Up"));
 
@@ -98,7 +100,7 @@ class CloudStorageApplicationTests {
 	{
 		// Log in to our dummy account.
 		driver.get("http://localhost:" + this.port + "/login");
-		WebDriverWait webDriverWait = new WebDriverWait(driver, 2);
+		WebDriverWait webDriverWait = new WebDriverWait(driver, Duration.ofSeconds(2));
 
 		webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(By.id("inputUsername")));
 		WebElement loginUserName = driver.findElement(By.id("inputUsername"));
@@ -120,7 +122,7 @@ class CloudStorageApplicationTests {
 
 	private void doLogOut()
 	{
-		WebDriverWait webDriverWait = new WebDriverWait(driver, 2);
+		WebDriverWait webDriverWait = new WebDriverWait(driver, Duration.ofSeconds(2));
 
 		webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(By.id("logout-button")));
 		WebElement logoutButton = driver.findElement(By.id("logout-button"));
@@ -131,7 +133,7 @@ class CloudStorageApplicationTests {
 	}
 
 	private void doMockCreateNote(String title, String desc) {
-		WebDriverWait webDriverWait = new WebDriverWait(driver, 2);
+		WebDriverWait webDriverWait = new WebDriverWait(driver, Duration.ofSeconds(2));
 
 		webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(By.id("nav-notes-tab")));
 		WebElement noteTab = driver.findElement(By.id("nav-notes-tab"));
@@ -167,7 +169,7 @@ class CloudStorageApplicationTests {
 	}
 
 	private void doMockCreateCredential(String url, String username, String password) {
-		WebDriverWait webDriverWait = new WebDriverWait(driver, 2);
+		WebDriverWait webDriverWait = new WebDriverWait(driver, Duration.ofSeconds(2));
 
 		webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(By.id("nav-credentials-tab")));
 		WebElement credentialTab = driver.findElement(By.id("nav-credentials-tab"));
@@ -269,7 +271,7 @@ class CloudStorageApplicationTests {
 		doLogIn("LFT", "123");
 
 		// Try to upload an arbitrary large file
-		WebDriverWait webDriverWait = new WebDriverWait(driver, 2);
+		WebDriverWait webDriverWait = new WebDriverWait(driver, Duration.ofSeconds(2));
 		String fileName = "upload5m.zip";
 
 		webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(By.id("fileUpload")));
@@ -288,14 +290,13 @@ class CloudStorageApplicationTests {
 	}
 	@Test
 	public void testUnauthorizedUserShouldRedirectToLogin() {
-		WebDriverWait webDriverWait = new WebDriverWait(driver, 2);
 		driver.get("http://localhost:" + this.port + "/home");
 
 		Assertions.assertTrue(driver.getPageSource().contains("Login"));
 	}
 	@Test
 	public void testUnauthorizedUserShoulBeAbleToSeeSignUpAndLogin() {
-		WebDriverWait webDriverWait = new WebDriverWait(driver, 2);
+		WebDriverWait webDriverWait = new WebDriverWait(driver, Duration.ofSeconds(2));
 		driver.get("http://localhost:" + this.port + "/signup");
 		webDriverWait.until(ExpectedConditions.titleContains("Sign Up"));
 
@@ -340,7 +341,7 @@ class CloudStorageApplicationTests {
 
 		doMockCreateNote("test-title", "test-description");
 
-		WebDriverWait webDriverWait = new WebDriverWait(driver, 2);
+		WebDriverWait webDriverWait = new WebDriverWait(driver, Duration.ofSeconds(2));
 		webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(By.id("edit-note")));
 		WebElement editButton = driver.findElement(By.id("edit-note"));
 		editButton.click();
@@ -382,7 +383,7 @@ class CloudStorageApplicationTests {
 
 		doMockCreateNote("test-title", "test-description");
 
-		WebDriverWait webDriverWait = new WebDriverWait(driver, 2);
+		WebDriverWait webDriverWait = new WebDriverWait(driver, Duration.ofSeconds(2));
 		webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(By.id("delete-note")));
 		WebElement deleteButton = driver.findElement(By.id("delete-note"));
 		deleteButton.click();
@@ -421,7 +422,7 @@ class CloudStorageApplicationTests {
 		doMockCreateCredential("test-url", "EC", "!@io#edlkls");
 		doMockCreateCredential("test-url2", "EC", "(0#2ej[opi)!");
 
-		WebDriverWait webDriverWait = new WebDriverWait(driver, 2);
+		WebDriverWait webDriverWait = new WebDriverWait(driver, Duration.ofSeconds(2));
 		webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(By.id("edit-credential")));
 
 		String encrypt = driver.findElements(By.id("encrypted-password")).get(1).getText();
@@ -472,7 +473,7 @@ class CloudStorageApplicationTests {
 		doMockCreateCredential("abc.com", "EC", "!@io#edlkls");
 		doMockCreateCredential("test-url2", "EC", "(0#2ej[opi)!");
 
-		WebDriverWait webDriverWait = new WebDriverWait(driver, 2);
+		WebDriverWait webDriverWait = new WebDriverWait(driver, Duration.ofSeconds(2));
 		webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(By.id("delete-credential")));
 		WebElement deleteButton = driver.findElements(By.id("delete-credential")).get(1);
 		deleteButton.click();
